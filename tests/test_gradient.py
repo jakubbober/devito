@@ -20,8 +20,7 @@ class TestGradient(object):
         """
         spacing = tuple(10. for _ in shape)
         wave = setup(shape=shape, spacing=spacing, dtype=np.float32,
-                     kernel=kernel, space_order=space_order,
-                     nbl=40, opt=('noop', {'openmp': True, 'par-dynamic-work': 1000}))
+                     kernel=kernel, space_order=space_order, nbl=40)
 
         v0 = Function(name='v0', grid=wave.model.grid, space_order=space_order)
         smooth(v0, wave.model.vp)
