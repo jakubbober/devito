@@ -110,11 +110,11 @@ class TestRoundoff(object):
         ...
         """
         iterations = 10000
-        r= Constant(name='r')
+        r= Constant(name='r', dtype=np.float64)
         r.data = dat
         s = 0.01
 
-        grid = Grid(shape=(2, 2), extent=(1, 1))
+        grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
         dt = grid.stepping_dim.spacing
 
         f0 = TimeFunction(name='f0', grid=grid, time_order=2, dtype=np.float64)
@@ -134,7 +134,7 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-8)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_backward_double(self, dat):
@@ -142,11 +142,11 @@ class TestRoundoff(object):
         ...
         """
         iterations = 10000
-        r= Constant(name='r')
+        r= Constant(name='r', dtype=np.float64)
         r.data = dat
         s = 0.01
 
-        grid = Grid(shape=(2, 2), extent=(1, 1))
+        grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
         dt = grid.stepping_dim.spacing
 
         f0 = TimeFunction(name='f0', grid=grid, time_order=2, dtype=np.float64)
@@ -166,7 +166,7 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-8)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_fb_double(self, dat):
@@ -174,11 +174,11 @@ class TestRoundoff(object):
         ...
         """
         iterations = 10000
-        r= Constant(name='r')
+        r= Constant(name='r', dtype=np.float64)
         r.data = dat
         s = 0.01
 
-        grid = Grid(shape=(2, 2), extent=(1, 1))
+        grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
         dt = grid.stepping_dim.spacing
 
         f0 = TimeFunction(name='f0', grid=grid, time_order=2, dtype=np.float64)
@@ -198,4 +198,4 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-8)
