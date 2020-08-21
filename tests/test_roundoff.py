@@ -8,14 +8,14 @@ class TestRoundoff(object):
     """
     Class for testing SubDomains
     """
-
-    def test_lm_forward(self):
+    @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
+    def test_lm_forward(self, dat):
         """
         ...
         """
         iterations = 10000
         r= Constant(name='r')
-        r.data = 4.0
+        r.data = dat
         s = 0.01
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
@@ -40,13 +40,14 @@ class TestRoundoff(object):
 
         assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
 
-    def test_lm_backward(self):
+    @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
+    def test_lm_backward(self, dat):
         """
         ...
         """
         iterations = 10000
         r= Constant(name='r')
-        r.data = 4.0
+        r.data = dat
         s = 0.01
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
@@ -71,13 +72,14 @@ class TestRoundoff(object):
 
         assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
 
-    def test_lm_fb(self):
+    @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
+    def test_lm_fb(self, dat):
         """
         ...
         """
         iterations = 10000
         r= Constant(name='r')
-        r.data = 4.0
+        r.data = dat
         s = 0.01
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
