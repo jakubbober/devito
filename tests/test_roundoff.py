@@ -15,7 +15,7 @@ class TestRoundoff(object):
         """
         iterations = 10000
         r= Constant(name='r')
-        r.data = dat
+        r.data = np.float32(dat)
         s = np.float32(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
@@ -38,7 +38,7 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-5)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-5)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_backward(self, dat):
@@ -47,7 +47,7 @@ class TestRoundoff(object):
         """
         iterations = 10000
         r= Constant(name='r')
-        r.data = dat
+        r.data = np.float32(dat)
         s = np.float32(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
@@ -70,7 +70,7 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-5)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-5)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_fb(self, dat):
@@ -79,7 +79,7 @@ class TestRoundoff(object):
         """
         iterations = 10000
         r= Constant(name='r')
-        r.data = dat
+        r.data = np.float32(dat)
         s = np.float32(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
@@ -102,7 +102,8 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-5)
+        #assert np.isclose(np.linalg.norm(f0.data[np.mod(iterations+1,3)]-f1.data[iterations+1]), 0.0, atol=1.e-5)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-5)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_forward_double(self, dat):
@@ -111,7 +112,7 @@ class TestRoundoff(object):
         """
         iterations = 10000
         r= Constant(name='r', dtype=np.float64)
-        r.data = dat
+        r.data = np.float64(dat)
         s = np.float64(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
@@ -134,7 +135,7 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-12)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-12)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_backward_double(self, dat):
@@ -143,7 +144,7 @@ class TestRoundoff(object):
         """
         iterations = 10000
         r= Constant(name='r', dtype=np.float64)
-        r.data = dat
+        r.data = np.float64(dat)
         s = np.float64(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
@@ -166,7 +167,7 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-12)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-12)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_fb_double(self, dat):
@@ -175,7 +176,7 @@ class TestRoundoff(object):
         """
         iterations = 10000
         r= Constant(name='r', dtype=np.float64)
-        r.data = dat
+        r.data = np.float64(dat)
         s = np.float64(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
@@ -198,4 +199,4 @@ class TestRoundoff(object):
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-12)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-12)
