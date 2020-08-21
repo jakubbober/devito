@@ -8,8 +8,8 @@ class TestRoundoff(object):
     """
     Class for testing SubDomains
     """
-    @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
-    def test_lm_forward(self, dat):
+    @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0], 'dtype', [np.float32, np.float64])
+    def test_lm_forward(self, dat, dtype):
         """
         ...
         """
@@ -21,8 +21,8 @@ class TestRoundoff(object):
         grid = Grid(shape=(2, 2), extent=(1, 1))
         dt = grid.stepping_dim.spacing
 
-        f0 = TimeFunction(name='f0', grid=grid, time_order=2)
-        f1 = TimeFunction(name='f1', grid=grid, time_order=2, save=iterations+2)
+        f0 = TimeFunction(name='f0', grid=grid, time_order=2, dtype=dtype)
+        f1 = TimeFunction(name='f1', grid=grid, time_order=2, save=iterations+2, dtype=dtype)
 
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.forward-f0.forward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.forward-f1.forward))
