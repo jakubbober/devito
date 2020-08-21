@@ -29,16 +29,16 @@ class TestRoundoff(object):
 
         initial_condition = np.float32(0.7235)
 
-        f0.data[:, :, :] = initial_condition
-        f1.data[:, :, :] = initial_condition
+        f0.data[1, :, :] = initial_condition
+        f1.data[1, :, :] = initial_condition
 
-        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
+        op0 = Operator([Eq(f0.forward, np.float32(0.0)), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-5)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_backward(self, dat):
@@ -61,16 +61,16 @@ class TestRoundoff(object):
 
         initial_condition = np.float32(0.7235)
 
-        f0.data[:, :, :] = initial_condition
-        f1.data[:, :, :] = initial_condition
+        f0.data[1, :, :] = initial_condition
+        f1.data[1, :, :] = initial_condition
 
-        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
+        op0 = Operator([Eq(f0.forward, np.float32(0.0)), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-5)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_fb(self, dat):
@@ -93,16 +93,16 @@ class TestRoundoff(object):
 
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward+(1.0/s)*dt*f1.forward-f1.forward))
 
-        f0.data[:, :, :] = initial_condition
-        f1.data[:, :, :] = initial_condition
+        f0.data[1, :, :] = initial_condition
+        f1.data[1, :, :] = initial_condition
 
-        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
+        op0 = Operator([Eq(f0.forward, np.float32(0.0)), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], atol=0, rtol=0)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-5)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_forward_double(self, dat):
@@ -125,16 +125,16 @@ class TestRoundoff(object):
 
         initial_condition = np.float64(0.7235)
 
-        f0.data[:, :, :] = initial_condition
-        f1.data[:, :, :] = initial_condition
+        f0.data[1, :, :] = initial_condition
+        f1.data[1, :, :] = initial_condition
 
-        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
+        op0 = Operator([Eq(f0.forward, np.float64(0.0)), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-8)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-12)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_backward_double(self, dat):
@@ -157,16 +157,16 @@ class TestRoundoff(object):
 
         initial_condition = np.float64(0.7235)
 
-        f0.data[:, :, :] = initial_condition
-        f1.data[:, :, :] = initial_condition
+        f0.data[1, :, :] = initial_condition
+        f1.data[1, :, :] = initial_condition
 
-        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
+        op0 = Operator([Eq(f0.forward, np.float64(0.0)), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-8)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-12)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
     def test_lm_fb_double(self, dat):
@@ -189,13 +189,13 @@ class TestRoundoff(object):
 
         initial_condition = np.float64(0.7235)
 
-        f0.data[:, :, :] = initial_condition
-        f1.data[:, :, :] = initial_condition
+        f0.data[1, :, :] = initial_condition
+        f1.data[1, :, :] = initial_condition
 
-        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
+        op0 = Operator([Eq(f0.forward, np.float64(0.0)), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
         op1(time_m=1, time_M=iterations, dt=s)
 
-        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1.e-8)
+        assert np.allclose(f0.data[np.mod(iterations+1,3)], f1.data[iterations+1], rtol=1e-12)
