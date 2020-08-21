@@ -16,7 +16,7 @@ class TestRoundoff(object):
         iterations = 10000
         r= Constant(name='r')
         r.data = dat
-        s = 0.01
+        s = np.float32(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
         dt = grid.stepping_dim.spacing
@@ -48,7 +48,7 @@ class TestRoundoff(object):
         iterations = 10000
         r= Constant(name='r')
         r.data = dat
-        s = 0.01
+        s = np.float32(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
         dt = grid.stepping_dim.spacing
@@ -80,8 +80,7 @@ class TestRoundoff(object):
         iterations = 10000
         r= Constant(name='r')
         r.data = dat
-        s = 0.01
-        initial_condition = np.float32(0.7235)
+        s = np.float32(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
         dt = grid.stepping_dim.spacing
@@ -89,8 +88,9 @@ class TestRoundoff(object):
         f0 = TimeFunction(name='f0', grid=grid, time_order=2)
         f1 = TimeFunction(name='f1', grid=grid, time_order=2, save=iterations+2)
 
-        lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.backward-f0.backward+(1.0/s)*dt*f0.forward-f0.forward))
+        initial_condition = np.float32(0.7235)
 
+        lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.backward-f0.backward+(1.0/s)*dt*f0.forward-f0.forward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward+(1.0/s)*dt*f1.forward-f1.forward))
 
         f0.data[1, :, :] = initial_condition
@@ -112,7 +112,7 @@ class TestRoundoff(object):
         iterations = 10000
         r= Constant(name='r', dtype=np.float64)
         r.data = dat
-        s = 0.01
+        s = np.float64(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
         dt = grid.stepping_dim.spacing
@@ -144,7 +144,7 @@ class TestRoundoff(object):
         iterations = 10000
         r= Constant(name='r', dtype=np.float64)
         r.data = dat
-        s = 0.01
+        s = np.float64(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
         dt = grid.stepping_dim.spacing
@@ -176,7 +176,7 @@ class TestRoundoff(object):
         iterations = 10000
         r= Constant(name='r', dtype=np.float64)
         r.data = dat
-        s = 0.01
+        s = np.float64(0.1)
 
         grid = Grid(shape=(2, 2), extent=(1, 1), dtype=np.float64)
         dt = grid.stepping_dim.spacing
