@@ -27,12 +27,12 @@ class TestRoundoff(object):
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.forward-f0.forward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.forward-f1.forward))
 
-        initial_condition = 0.7235
+        initial_condition = np.float32(0.7235)
 
         f0.data[:, :, :] = initial_condition
         f1.data[:, :, :] = initial_condition
 
-        op0 = Operator(lmap0)
+        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
@@ -59,12 +59,12 @@ class TestRoundoff(object):
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.backward-f0.backward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward))
 
-        initial_condition = 0.7235
+        initial_condition = np.float32(0.7235)
 
         f0.data[:, :, :] = initial_condition
         f1.data[:, :, :] = initial_condition
 
-        op0 = Operator(lmap0)
+        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
@@ -81,6 +81,7 @@ class TestRoundoff(object):
         r= Constant(name='r')
         r.data = dat
         s = 0.01
+        initial_condition = np.float32(0.7235)
 
         grid = Grid(shape=(2, 2), extent=(1, 1))
         dt = grid.stepping_dim.spacing
@@ -89,14 +90,13 @@ class TestRoundoff(object):
         f1 = TimeFunction(name='f1', grid=grid, time_order=2, save=iterations+2)
 
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.backward-f0.backward+(1.0/s)*dt*f0.forward-f0.forward))
-        lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward+(1.0/s)*dt*f1.forward-f1.forward))
 
-        initial_condition = 0.7235
+        lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward+(1.0/s)*dt*f1.forward-f1.forward))
 
         f0.data[:, :, :] = initial_condition
         f1.data[:, :, :] = initial_condition
 
-        op0 = Operator(lmap0)
+        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
@@ -123,12 +123,12 @@ class TestRoundoff(object):
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.forward-f0.forward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.forward-f1.forward))
 
-        initial_condition = 0.7235
+        initial_condition = np.float64(0.7235)
 
         f0.data[:, :, :] = initial_condition
         f1.data[:, :, :] = initial_condition
 
-        op0 = Operator(lmap0)
+        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
@@ -155,12 +155,12 @@ class TestRoundoff(object):
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.backward-f0.backward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward))
 
-        initial_condition = 0.7235
+        initial_condition = np.float64(0.7235)
 
         f0.data[:, :, :] = initial_condition
         f1.data[:, :, :] = initial_condition
 
-        op0 = Operator(lmap0)
+        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
@@ -187,12 +187,12 @@ class TestRoundoff(object):
         lmap0 = Eq(f0.forward, r*f0*(1.0-f0+(1.0/s)*dt*f0.backward-f0.backward+(1.0/s)*dt*f0.forward-f0.forward))
         lmap1 = Eq(f1.forward, r*f1*(1.0-f1+(1.0/s)*dt*f1.backward-f1.backward+(1.0/s)*dt*f1.forward-f1.forward))
 
-        initial_condition = 0.7235
+        initial_condition = np.float64(0.7235)
 
         f0.data[:, :, :] = initial_condition
         f1.data[:, :, :] = initial_condition
 
-        op0 = Operator(lmap0)
+        op0 = Operator([Eq(f0.forward, initial_condition), lmap0])
         op1 = Operator(lmap1)
 
         op0(time_m=1, time_M=iterations, dt=s)
