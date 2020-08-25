@@ -10,8 +10,8 @@ class TestRoundoff(object):
     stencil types.
     """
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
-    @pytest.mark.parametrize('dtype, rtol', [(np.float32, 1.e-5), (np.float64, 1.e-12)])
-    def test_lm_forward(self, dat, dtype, rtol):
+    @pytest.mark.parametrize('dtype', [np.float32, np.float64])
+    def test_lm_forward(self, dat, dtype):
         """
         Test logistic map with forward term that should cancel.
         """
@@ -41,11 +41,11 @@ class TestRoundoff(object):
         op1(time_m=1, time_M=iterations, dt=s)
 
         assert np.allclose(f0.data[np.mod(iterations+1, 3)], f1.data[iterations+1],
-                           rtol=rtol)
+                           atol=0, rtol=0)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
-    @pytest.mark.parametrize('dtype, rtol', [(np.float32, 1.e-5), (np.float64, 1.e-12)])
-    def test_lm_backward(self, dat, dtype, rtol):
+    @pytest.mark.parametrize('dtype', [np.float32, np.float64])
+    def test_lm_backward(self, dat, dtype):
         """
         Test logistic map with backward term that should cancel.
         """
@@ -75,11 +75,11 @@ class TestRoundoff(object):
         op1(time_m=1, time_M=iterations, dt=s)
 
         assert np.allclose(f0.data[np.mod(iterations+1, 3)], f1.data[iterations+1],
-                           rtol=rtol)
+                           atol=0, rtol=0)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
-    @pytest.mark.parametrize('dtype, rtol', [(np.float32, 1.e-5), (np.float64, 1.e-12)])
-    def test_lm_fb(self, dat, dtype, rtol):
+    @pytest.mark.parametrize('dtype', [np.float32, np.float64])
+    def test_lm_fb(self, dat, dtype):
         """
         Test logistic map with forward and backward terms that should cancel.
         """
@@ -111,11 +111,11 @@ class TestRoundoff(object):
         op1(time_m=1, time_M=iterations, dt=s)
 
         assert np.allclose(f0.data[np.mod(iterations+1, 3)], f1.data[iterations+1],
-                           rtol=rtol)
+                           atol=0, rtol=0)
 
     @pytest.mark.parametrize('dat', [0.5, 0.624, 1.0, 1.5, 2.0, 3.0, 3.6767, 4.0])
-    @pytest.mark.parametrize('dtype, rtol', [(np.float32, 1.e-5), (np.float64, 1.e-12)])
-    def test_lm_ds(self, dat, dtype, rtol):
+    @pytest.mark.parametrize('dtype', [np.float32, np.float64])
+    def test_lm_ds(self, dat, dtype):
         """
         Test logistic map with 2nd derivative term that should cancel.
         """
@@ -146,4 +146,4 @@ class TestRoundoff(object):
         op1(time_m=1, time_M=iterations, dt=s)
 
         assert np.allclose(f0.data[np.mod(iterations+1, 3)], f1.data[iterations+1],
-                           rtol=rtol)
+                           atol=0, rtol=0)
